@@ -6,12 +6,16 @@ from dataclasses import dataclass
 from typing import Any, Iterable
 from urllib.parse import parse_qs, urlparse
 
+import truststore
+
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from youtube_transcript_api import YouTubeTranscriptApi
 from yt_dlp import YoutubeDL
+
+truststore.inject_into_ssl()
 
 
 @dataclass(frozen=True)

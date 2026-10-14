@@ -3,7 +3,7 @@ import os
 
 import streamlit as st
 from dotenv import load_dotenv
-from openai import APIError
+from openai import APIConnectionError, APIError
 from youtube_transcript_api._errors import YouTubeTranscriptApiException
 from yt_dlp.utils import DownloadError
 
@@ -133,6 +133,11 @@ if candidates:
                         analyze_video(selected_video)
                     )
                 st.session_state.answers = []
+            except APIConnectionError:
+                st.error(
+                    "Could not connect securely to OpenAI. Check your network "
+                    "connection and the system's trusted certificates, then retry."
+                )
             except (ValueError, YouTubeTranscriptApiException, APIError) as error:
                 st.error(f"Could not analyze this video: {error}")
 
@@ -178,6 +183,11 @@ if result:
                             "answer": answer,
                             "sources": sources,
                         },
+                    )
+                except APIConnectionError:
+                    st.error(
+                        "Could not connect securely to OpenAI. Check your network "
+                        "connection and the system's trusted certificates, then retry."
                     )
                 except (ValueError, APIError) as error:
                     st.error(f"Could not answer that question: {error}")

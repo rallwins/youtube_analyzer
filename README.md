@@ -65,6 +65,10 @@ Add your OpenAI API key to `.env`, then:
 streamlit run app.py
 ```
 
+Python HTTPS requests use the operating system's trusted certificate store. If
+your network uses a private certificate authority, install and trust that CA in
+the operating system certificate store before running the app.
+
 The key is read from the environment and should never be committed. Search uses
 yt-dlp's YouTube search; no YouTube Data API key is required. Only videos with an
 available English transcript can be analyzed. Transcript passages and the in-memory
